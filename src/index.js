@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Configuration,  PublicClientApplication } from "@azure/msal-browser";
-import { MsalProvider, useMsal } from "@azure/msal-react";
+import { MsalProvider, useMsal, useIsAuthenticated } from "@azure/msal-react";
 
 
 const configuration: Configuration = {
@@ -15,10 +15,17 @@ const clientInstance = new PublicClientApplication(configuration);
 
 const PageContent = () => {
   const { instance } = useMsal();
+  const isAuthenticated = useIsAuthenticated();
 
-  return (
-  <div><button onClick={() => instance.loginPopup()}>Login</button> </div>
-  );
+  return isAuthenticated ? (
+    <div>You are logged in. Welcome. <br/>
+      <button onClick={() => instance.logout()}>Logout</button> 
+    </div>
+    
+    ): 
+    (
+    <div><button onClick={() => instance.loginPopup()}>Login</button> </div>
+    );
 
 }
 

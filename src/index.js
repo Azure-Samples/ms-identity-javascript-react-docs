@@ -14,11 +14,13 @@ const clientInstance = new PublicClientApplication(configuration);
 
 
 const PageContent = () => {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
+  const {name} = accounts[0]||{};
+
   const isAuthenticated = useIsAuthenticated();
 
   return isAuthenticated ? (
-    <div>You are logged in. Welcome. <br/>
+    <div>You are logged in. Welcome {name}.<br/>
       <button onClick={() => instance.logout()}>Logout</button> 
     </div>
     

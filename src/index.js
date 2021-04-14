@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Configuration,  PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider, useMsal } from "@azure/msal-react";
 
 
 const configuration: Configuration = {
@@ -11,9 +12,21 @@ const configuration: Configuration = {
 
 const clientInstance = new PublicClientApplication(configuration);
 
+
+const PageContent = () => {
+  const { instance } = useMsal();
+
+  return (
+  <div><button onClick={() => instance.loginPopup()}>Login</button> </div>
+  );
+
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <div>Hello, World.</div>
+    <MsalProvider instance={clientInstance}>
+      <PageContent />
+    </MsalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

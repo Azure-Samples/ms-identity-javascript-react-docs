@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//<import_modules>  
+//<msdocs_ref_import_modules>  
 import { Configuration,  PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider, useMsal, useIsAuthenticated } from "@azure/msal-react";
-//</import_modules>  
+//</msdocs_ref_import_modules>  
 
 
 

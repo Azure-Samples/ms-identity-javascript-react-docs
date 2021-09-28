@@ -1,10 +1,14 @@
-# Getting Started with the Microsoft Identity Platform on React
+# React single-page app (SPA) | Sign in users, call protected API | Microsoft identity platform
 
-This bare-bones React application signs users in and out of Azure AD.
+This minimal React application demonstrates usage of the Microsoft Authentication Library for React (MSAL React) to:
+
+- Sign in Azure AD users (authentication)
+- Call a protected web API (authorization)
+- Sign out users
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Available scripts
 
 In the project directory, you can run:
 

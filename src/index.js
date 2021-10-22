@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 // <ms_docref_import_modules>
@@ -16,7 +16,43 @@ const configuration: Configuration = {
 const clientInstance = new PublicClientApplication(configuration);
 // </ms_docref_configure_msal>
 
+// <ms_docref_get_graph_token>
+const getGraphToken =  async (msalInstance, accounts) => {
+  const tokenRequest = {
+    scopes: ["User.Read", "openid", "profile"],
+    account: accounts
+  }
+  
+  try{
+    const {accessToken} = await msalInstance.acquireTokenSilent(tokenRequest);
+    return accessToken;
+  } catch (e) {
+    const {accessToken} = await msalInstance.acquireTokenPopup(tokenRequest);
+    return accessToken;
+  }
+  
+}
+// </ms_docref_get_graph_token>
+
+// <ms_docref_make_graph_call>
+const MICROSOFT_GRAPH_URL = "https://graph.microsoft.com/v1.0"
+
+const fetchUserDetails = async (msalInstance, accounts, setUserDetails) => {
+  const bearer = `Bearer ${await getGraphToken(msalInstance, accounts)}`;
+  const response = await fetch(`${MICROSOFT_GRAPH_URL}/me`, { 
+    method: 'get', 
+    headers: new Headers({
+      'Authorization': bearer
+    })
+  }).then(res => res.json());
+
+  setUserDetails(response)
+}
+// </ms_docref_make_graph_call>
+
 const PageContent = () => {
+
+  const [userDetails, setUserDetails] = useState({});
 
   // <ms_docref_use_msal_context>
   const { instance, accounts } = useMsal();
@@ -30,6 +66,18 @@ const PageContent = () => {
   return isAuthenticated ? (
     <div>You are logged in. Welcome {name}.<br/>
       <button onClick={() => instance.logout()}>Logout</button>
+
+      <button onClick={() => fetchUserDetails(instance, accounts, setUserDetails)}>Fetch User Details from Graph</button>
+
+      {userDetails.displayName ? (
+        <div>
+          Display Name and Email
+          <br/>
+          <span> {userDetails.displayName} </span>
+          <span> {userDetails.mail} </span>
+        </div>
+        ): ""}
+
     </div>
     ):
     (

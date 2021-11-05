@@ -60,7 +60,7 @@ const PageContent = () => {
 
   const {name} = accounts[0]||{};
 
-  // </ms_docref_check_logged_in_state>
+  // <ms_docref_check_logged_in_state>
   const isAuthenticated = useIsAuthenticated();
 
   return isAuthenticated ? (

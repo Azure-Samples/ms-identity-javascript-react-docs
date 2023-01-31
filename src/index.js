@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
 
 // <ms_docref_import_modules>
-import { Configuration, PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider, useMsal, useIsAuthenticated  } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
 import { msalConfig } from './authConfig';
 
 // Bootstrap components
